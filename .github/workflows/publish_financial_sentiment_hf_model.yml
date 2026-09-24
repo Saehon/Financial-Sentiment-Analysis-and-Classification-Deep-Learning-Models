@@ -1,0 +1,31 @@
+name: Publish financial sentiment model privately to Hugging Face
+
+on:
+  push:
+    branches:
+      - codex/financial-sentiment-hf-baseline-2026-09-24
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out model and evaluation
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python -m pip install -r models/financial_sentiment_hf/requirements.txt
+          python -m pip install 'huggingface_hub>=1.0,<2'
+      - name: Verify model and data splits
+        run: python -m unittest discover -s models/financial_sentiment_hf -p 'test_*.py' -v
+      - name: Upload to a private Hugging Face repository
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python models/financial_sentiment_hf/publish_to_hf.py
