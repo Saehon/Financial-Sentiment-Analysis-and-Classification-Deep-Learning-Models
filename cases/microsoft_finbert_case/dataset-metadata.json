@@ -1,9 +1,17 @@
 {
   "title": "Microsoft Financial Sentiment FinBERT Case",
-  "id": "YOUR_KAGGLE_USERNAME/microsoft-finbert-sentiment-case",
+  "subtitle": "One reproducible Microsoft finance sentiment example using Hugging Face FinBERT",
+  "description": "A minimal research and teaching case connecting GitHub code with Hugging Face FinBERT for financial sentiment classification. The included Microsoft sentence is synthetic demonstration text and is not a quotation from a filing.",
+  "id": "sadhon/microsoft-finbert-sentiment-case",
   "licenses": [
     {
       "name": "CC0-1.0"
     }
+  ],
+  "keywords": [
+    "finance",
+    "sentiment analysis",
+    "microsoft",
+    "bert"
   ]
 }
