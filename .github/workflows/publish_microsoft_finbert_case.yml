@@ -1,0 +1,80 @@
+name: Publish Microsoft FinBERT Case
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      CASE_DIR: cases/microsoft_finbert_case
+      HF_REPO_ID: SADHON/microsoft-finbert-sentiment-case
+      KAGGLE_DATASET_ID: sadhon/microsoft-finbert-sentiment-case
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install case and publishing dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r "$CASE_DIR/requirements.txt"
+          pip install huggingface_hub kaggle
+
+      - name: Run Microsoft FinBERT case
+        run: python "$CASE_DIR/run_finbert.py"
+
+      - name: Prepare Hugging Face dataset folder
+        run: |
+          rm -rf hf_publish
+          mkdir hf_publish
+          cp "$CASE_DIR/microsoft_case.csv" hf_publish/
+          cp "$CASE_DIR/microsoft_case_results.csv" hf_publish/
+          cp "$CASE_DIR/README_HUGGINGFACE.md" hf_publish/README.md
+          cp "$CASE_DIR/run_finbert.py" hf_publish/
+          cp "$CASE_DIR/requirements.txt" hf_publish/
+
+      - name: Publish private dataset to Hugging Face
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          python - <<'PY'
+          import os
+          from huggingface_hub import HfApi, create_repo
+
+          repo_id = os.environ["HF_REPO_ID"]
+          token = os.environ["HF_TOKEN"]
+
+          create_repo(
+              repo_id=repo_id,
+              repo_type="dataset",
+              private=True,
+              exist_ok=True,
+              token=token,
+          )
+
+          HfApi(token=token).upload_folder(
+              repo_id=repo_id,
+              repo_type="dataset",
+              folder_path="hf_publish",
+              commit_message="Publish Microsoft FinBERT reproducible case",
+          )
+          PY
+
+      - name: Publish private dataset to Kaggle
+        env:
+          KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_API_TOKEN }}
+        run: |
+          if kaggle datasets status "$KAGGLE_DATASET_ID" >/dev/null 2>&1; then
+            kaggle datasets version               -p "$CASE_DIR"               -m "Automated Microsoft FinBERT case update"               -q -t -r skip
+          else
+            kaggle datasets create               -p "$CASE_DIR"               -q -t -r skip
+          fi
