@@ -1,0 +1,139 @@
+{
+  "candidate_validation_macro_f1": {
+    "0.1": 0.596918,
+    "1.0": 0.698672,
+    "10.0": 0.690655
+  },
+  "counts": {
+    "class_counts": {
+      "test": {
+        "negative": 143,
+        "neutral": 149,
+        "positive": 172
+      },
+      "train": {
+        "negative": 451,
+        "neutral": 450,
+        "positive": 516
+      },
+      "validation": {
+        "negative": 151,
+        "neutral": 155,
+        "positive": 172
+      }
+    },
+    "original": {
+      "test": 516,
+      "train": 1548,
+      "validation": 516
+    },
+    "original_cross_split_text_overlap": {
+      "train_test": 32,
+      "train_validation": 28,
+      "validation_test": 10
+    },
+    "removed_ambiguous_training_text_groups": 65,
+    "retained": {
+      "test": 464,
+      "train": 1417,
+      "validation": 478
+    }
+  },
+  "dataset_description": "Repository describes combined FiQA and Financial PhraseBank data; upstream reuse rights need separate verification.",
+  "export_max_probability_error": 0.0,
+  "model": {
+    "algorithm": "TF-IDF (word 1-2 grams) plus multinomial logistic regression",
+    "features": 4153,
+    "seed": 42,
+    "selected_C": 1.0
+  },
+  "retrieval_or_training_date_utc": "2026-09-24",
+  "source_commit": "0654984510e6a8ed15e89dd901b8328836cd7930",
+  "source_files": [
+    "Datasets/train_set.csv",
+    "Datasets/validation_set.csv",
+    "Datasets/test_set.csv"
+  ],
+  "source_paper_doi": "10.3390/ijfs13020075",
+  "source_repository": "https://github.com/Saehon/Financial-Sentiment-Analysis-and-Classification-Deep-Learning-Models",
+  "split_policy": "Original splits; remove ambiguous training texts, within-evaluation repeated texts, and any text seen in an earlier split. Selection uses validation only.",
+  "test": {
+    "accuracy": 0.7241379310344828,
+    "macro_f1": 0.7241154146073567,
+    "per_class": {
+      "accuracy": 0.7241379310344828,
+      "macro avg": {
+        "f1-score": 0.7241154146073567,
+        "precision": 0.7293898871685721,
+        "recall": 0.7246968732843557,
+        "support": 464.0
+      },
+      "negative": {
+        "f1-score": 0.7169811320754716,
+        "precision": 0.7786885245901639,
+        "recall": 0.6643356643356644,
+        "support": 143.0
+      },
+      "neutral": {
+        "f1-score": 0.7515527950310559,
+        "precision": 0.6994219653179191,
+        "recall": 0.8120805369127517,
+        "support": 149.0
+      },
+      "positive": {
+        "f1-score": 0.7038123167155426,
+        "precision": 0.7100591715976331,
+        "recall": 0.6976744186046512,
+        "support": 172.0
+      },
+      "weighted avg": {
+        "f1-score": 0.7232012647014938,
+        "precision": 0.727794201214561,
+        "recall": 0.7241379310344828,
+        "support": 464.0
+      }
+    }
+  },
+  "validation": {
+    "accuracy": 0.696652719665272,
+    "macro_f1": 0.6986720075033128,
+    "per_class": {
+      "accuracy": 0.696652719665272,
+      "macro avg": {
+        "f1-score": 0.6986720075033128,
+        "precision": 0.7080333225143352,
+        "recall": 0.6954122636619419,
+        "support": 478.0
+      },
+      "negative": {
+        "f1-score": 0.717391304347826,
+        "precision": 0.792,
+        "recall": 0.6556291390728477,
+        "support": 151.0
+      },
+      "neutral": {
+        "f1-score": 0.7028753993610224,
+        "precision": 0.6962025316455697,
+        "recall": 0.7096774193548387,
+        "support": 155.0
+      },
+      "positive": {
+        "f1-score": 0.6757493188010899,
+        "precision": 0.6358974358974359,
+        "recall": 0.7209302325581395,
+        "support": 172.0
+      },
+      "weighted avg": {
+        "f1-score": 0.6977001186009784,
+        "precision": 0.7047651702498373,
+        "recall": 0.696652719665272,
+        "support": 478.0
+      }
+    }
+  },
+  "versions": {
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scikit_learn": "1.8.0"
+  }
+}
